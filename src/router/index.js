@@ -21,7 +21,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "users" */ '../views/Users.vue')
+    component: () => import(/* webpackChunkName: "users" */ '../views/UsersView.vue')
   },
   {
     path: '/users/CreateUser',
@@ -29,7 +29,17 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "CreateUser" */ '../views/CreateUser.vue')
+    component: () => import(/* webpackChunkName: "CreateUser" */ '../views/CreateUserView.vue')
+
+  },
+  {
+    path: '/users/EditUser/:id',
+    name: 'EditUser',
+  
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "EditUser" */ '../views/EditUserView.vue')
 
   }
 

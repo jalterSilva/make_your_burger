@@ -1,10 +1,10 @@
 <template>
-    <div id="new-user">
-        <h1>Create New User</h1>
+    <div id="edit-user">
+        <h1>Edit User</h1>
    
          <Message :msg="msg" v-show="msg" />
          <MessageErr :msgErr="msgErr" v-show="msgErr" />
-        
+            
     </div>
    
     <div id="container-form">
@@ -12,7 +12,7 @@
             <button id="btn-back" class="btn-default" @click="GotoBackList()">Back to List</button>
         </div>
 
-        <form id="create-user-form" @submit="createUser">
+        <form id="edit-user-form" @submit="UpdateUser">
             <div class="input-container">
               <label for="nome">First Name *</label>
               <input type="text" id="firstName" name="firstName" v-model="firstName" placeholder="First Name" />
@@ -27,7 +27,7 @@
 
               <div class="input-container">
                 <label for="nome">E-mail *</label>
-                <input type="text" id="email" name="email" v-model="email" placeholder="E-mail" />
+                <input type="text" id="email" name="email" v-model="email" placeholder="E-mail" disabled/>
 
               </div>
 
@@ -55,7 +55,6 @@
 
     </div>
 
-
 </template>
 
 <script>
@@ -64,9 +63,10 @@ import MessageErr from "./MessageErr.vue";
 
 export default{
 
-    name:"NewUser",
+    name:"EditUser",
     data(){
       return{
+        id: "",
         firstName: "",
         lastName: "",
         email: "",
@@ -80,16 +80,38 @@ export default{
     },
     components: {
       Message,
-      MessageErr
+      MessageErr,
+
     },
     methods:{
       GotoBackList(){
         this.$router.push('/users'); 
       },
-      async createUser(e){
-        e.preventDefault();
+    async getUserById(id){
+       
+       var token = JSON.parse(localStorage.getItem( 'token'));
 
+            const req = await fetch(`https://localhost:44325/User/${id}`, {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: token,
+                }
+            });
+
+            const data = await req.json();
+
+            this.firstName = data.ResultData.FirstName;
+            this.lastName = data.ResultData.LastName;
+            this.email = data.ResultData.UserName;
+            this.phoneNumber = data.ResultData.PhoneNumber;
+            this.role = data.ResultData.UserRoleId;
+            
+      },     
+      async UpdateUser(e){
+       e.preventDefault();
         const data = {
+          Id: this.$route.params.id,
           FirstName: this.firstName,
           LastName: this.lastName,
           UserName: this.email,
@@ -101,12 +123,12 @@ export default{
           } 
          
         }
-
+        
         const requestModel = JSON.stringify(data);
         var token = JSON.parse(localStorage.getItem( 'token'));
       
         const req = await fetch('https://localhost:44325/User', {
-            method: "Post",
+            method: "PUT",
             headers: { "Content-Type": "application/json",
                        "Authorization": token,
             },
@@ -116,11 +138,12 @@ export default{
 
       const resp = await req.json();
 
+      // return
       this.status = resp.Success;
       if(this.status)
-        this.msg = `User Created success!`;
+        this.msg = `User Edited success!`;
       else
-        this.msgErr = `Error Creating user!`;
+        this.msgErr = `Error Editing user!`;
 
       this.ClearMessage();
 
@@ -129,8 +152,10 @@ export default{
         setTimeout(() => (this.msg = "",this.msgErr = ""), 3000);
     }
 
-  }
-   
+  },
+   mounted(){
+         this.getUserById(this.$route.params.id);
+    }
 }
 
 </script>
@@ -186,7 +211,4 @@ select {
 }
 
 </style>
-
-
-
 

@@ -14,8 +14,6 @@ import DashboardUsers from '../components/DashboardUsers.vue'
         components:{
             DashboardUsers
         }
-        
-
     }
 </script>
 

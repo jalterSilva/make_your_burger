@@ -106,7 +106,6 @@ export default {
 
       const resp = await req.json();
      
-
        //msg
        this.msg = `O pedido N° ${resp.id} foi atualizado para ${resp.status}`;
 

@@ -48,7 +48,7 @@
         <!-- rows -->
         <div id="user-table-rows">
           <div class="user-table-row" v-for="user in users" :key="user.Id">
-              <div class="order-number">{{user.Id}}</div>
+              <div class="order-number"><button id="user-id" class="btn-default-edit" @click="CallUpdateUser(user.Id)">Edit</button></div>
               <div>{{user.FirstName}}</div>
               <div>{{user.LastName}}</div>
               <div>{{user.UserName}}</div>
@@ -65,13 +65,15 @@
 <script>
 export default {
     name: "DashboardUsers",
+   
     data(){
         return {
+            id: "",
             users: [],
             firstName: "",
             lastName: "",    
            
-        }
+        };
     },
     methods: {   
         async getAllUsers(){
@@ -93,7 +95,10 @@ export default {
         },
         CreateUser(){
              this.$router.push('/users/CreateUser'); 
-        }
+        },
+        CallUpdateUser(id){
+            this.$router.push(`/users/EditUser/${id}`); 
+        },
     },
     mounted(){
         this.getAllUsers();
@@ -134,6 +139,7 @@ export default {
     width: 100%;
     padding: 12px;
     border-bottom: 1px solid #CCC;
+    align-items: center;
 }
 
 #user-table-heading .user-id,

@@ -10,7 +10,7 @@
 import NewUser from '../components/NewUser.vue'
 
 export default {
-    name: "CreateUser",
+    name: "CreateUserView",
     components: {
         NewUser
     }

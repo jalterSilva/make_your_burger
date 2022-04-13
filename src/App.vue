@@ -30,6 +30,19 @@ export default {
   box-sizing: border-box;
 }
 
+#container-form{
+ max-width: 1400px;
+  margin: 0 auto;
+
+}
+
+#create-user-form, #edit-user-form{
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-top: 40px;
+
+}
+
 .main-container{
   margin: 50px;
   min-height: 250px;
@@ -56,9 +69,23 @@ h1{
   
 }
 
-.btn-default:hover {
+.btn-default:hover, .btn-default-edit:hover {
   background-color: transparent;
   color: #222;
 }
+
+.btn-default-edit {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    border: 1px solid green;
+    border-radius: 3px;
+    padding: 8px;
+    font-size: 12px;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: .3s;
+}
+
 </style>
 
